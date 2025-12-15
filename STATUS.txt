@@ -1,0 +1,167 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                  TRANX - FRAUD DETECTION API                              ║
+║            Detección de Transacciones Bancarias Fraudulentas               ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+📍 UBICACIÓN:
+   /home/sonia/Descargas/TRANX_FraudDetection/
+
+🚀 SERVIDOR ESTADO:
+   ✓ Activo y funcionando en http://localhost:8000
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📦 ESTRUCTURA DEL PROYECTO
+
+TRANX_FraudDetection/
+├── manage.py                 ← Gestor de Django
+├── db.sqlite3                ← Base de datos
+├── requirements.txt          ← Dependencias Python
+├── README.md                 ← Documentación
+├── STATUS.txt                ← Este archivo
+├── test_image.jpg            ← Imagen de prueba
+├── test_image2.jpg           ← Imagen de prueba
+│
+├── tranx/                    ← Proyecto Django (renombrado de vemotionia)
+│   ├── __init__.py
+│   ├── settings.py           ← Configuración Django (DEBUG=True)
+│   ├── urls.py               ← Rutas principales
+│   ├── wsgi.py               ← Interfaz WSGI
+│   └── __pycache__/
+│
+├── api/                      ← Aplicación API
+│   ├── __init__.py
+│   ├── apps.py               ← Configuración de app
+│   ├── views.py              ← Endpoint /api/analyze/
+│   ├── urls.py               ← Rutas API
+│   ├── models.py             ← Modelos (no usado)
+│   └── __pycache__/
+│
+├── templates/
+│   └── index.html            ← Interfaz web interactiva
+│
+├── static/
+│   └── uploads/              ← Carpeta para subidas
+│
+└── .venv/                    ← Entorno virtual Python
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔌 ENDPOINTS API
+
+1. GET /
+   Página de inicio interactiva
+   - Interfaz web para subir imágenes
+   - Botón: "Analizar Fraude"
+   - Status: ✓ OK (200)
+
+2. POST /api/analyze/
+   Análisis de fraude bancario
+   - Parámetro: image (multipart/form-data)
+   - Retorna: JSON con resultados
+   - Status: ✓ OK (200)
+
+   Respuesta ejemplo:
+   {
+     "fraud_patterns_detected": 0,
+     "image": "iVBORw0KGgoAAAANSUhEUgAAA...",
+     "message": "Se detectaron 0 patrones sospechosos en la transacción"
+   }
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💻 CÓMO USAR
+
+OPCIÓN 1: Interfaz Web
+   1. Abrir: http://localhost:8000/
+   2. Hacer click en "Seleccionar archivo"
+   3. Subir una imagen (JPG, PNG, etc.)
+   4. Click en "Analizar Fraude"
+   5. Ver resultados con patrones detectados
+
+OPCIÓN 2: cURL (Terminal)
+   curl -X POST -F "image=@tu_imagen.jpg" http://localhost:8000/api/analyze/
+
+OPCIÓN 3: Python
+   import requests
+   with open('tu_imagen.jpg', 'rb') as f:
+       response = requests.post('http://localhost:8000/api/analyze/', 
+                                files={'image': f})
+   print(response.json())
+
+OPCIÓN 4: JavaScript/Fetch
+   const formData = new FormData();
+   formData.append('image', fileInput.files[0]);
+   
+   fetch('/api/analyze/', {
+       method: 'POST',
+       body: formData
+   })
+   .then(r => r.json())
+   .then(data => console.log(data));
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔄 CAMBIOS REALIZADOS
+
+✓ Carpeta principal:
+  V_EMOTIONIA_CORREGIDO → TRANX_FraudDetection
+
+✓ Proyecto Django:
+  vemotionia → tranx
+
+✓ Referencias actualizadas en:
+  - manage.py
+  - tranx/settings.py
+  - tranx/urls.py
+  - tranx/wsgi.py
+
+✓ Contexto de la API:
+  - Eliminado contexto de emociones
+  - Enfocado en "Transacciones Bancarias Fraudulentas"
+  - Endpoint: /api/analyze/
+  - Respuesta: fraud_patterns_detected, image, message
+
+✓ Eliminados archivos obsoletos:
+  - app.py (Flask antiguo)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚙️ CONFIGURACIÓN ACTUAL
+
+DEBUG:          True
+SECRET_KEY:     django-insecure-fraud-detection-api-key-change-in-production
+ALLOWED_HOSTS:  ['localhost', '127.0.0.1', '*']
+DATABASE:       SQLite3 (db.sqlite3)
+INSTALLED_APPS: 
+  - django.contrib.admin
+  - django.contrib.auth
+  - django.contrib.contenttypes
+  - django.contrib.sessions
+  - django.contrib.messages
+  - django.contrib.staticfiles
+  - rest_framework
+  - api
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 DEPENDENCIAS INSTALADAS
+
+- Django 5.2.9
+- Django REST Framework 3.16.1
+- OpenCV 4.12.0.88
+- NumPy 2.2.6
+- MediaPipe 0.10.14
+- (+ todas las sub-dependencias)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ TODO LISTO PARA USAR
+
+La API está completamente configurada y funcionando. 
+Puedes acceder a: http://localhost:8000
+
+Para detener el servidor: pkill -f "runserver"
+Para reiniciar: cd TRANX_FraudDetection && source .venv/bin/activate && python manage.py runserver 0.0.0.0:8000
+
+╚════════════════════════════════════════════════════════════════════════════╝

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang=\"es\">
+<head>
+    <meta charset=\"UTF-8\">
+    <title>Detección de Transacciones Bancarias Fraudulentas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 420px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        img {
+            margin-top: 15px;
+            max-width: 100%;
+            border-radius: 8px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Detección de Fraude Bancario</h2>
+    <p style="color: #666; font-size: 14px;">Analiza imágenes de transacciones para detectar patrones de fraude</p>
+
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="image" id="imageInput" accept="image/*" required>
+        <br><br>
+        <button type="submit">Analizar Fraude</button>
+    </form>
+
+    <p id="resultText"></p>
+    <img id="resultImage">
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const form = document.getElementById("uploadForm");
+    const resultImage = document.getElementById("resultImage");
+    const resultText = document.getElementById("resultText");
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        resultText.innerText = "Analizando imagen...";
+        resultImage.style.display = "none";
+
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch("/api/analyze/", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.image) {
+                resultImage.src = "data:image/png;base64," + data.image;
+                resultImage.style.display = "block";
+                resultText.innerText = data.message || ("Patrones detectados: " + data.fraud_patterns_detected);
+            } else {
+                resultText.innerText =
+                    "La imagen se recibió pero no se pudo procesar.";
+            }
+        } catch (error) {
+            resultText.innerText = "Error al conectar con el servidor.";
+        }
+    });
+
+});
+</script>
+
+</body>
+</html>
